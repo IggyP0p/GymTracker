@@ -1,18 +1,18 @@
 import { Tabs } from 'expo-router';
+import { useFonts } from 'expo-font';
 
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useFonts } from 'expo-font';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   const [fontsLoaded] = useFonts({
-    Bold: require('../../assets/fonts/Roboto-Black.ttf'),
-    Regular: require('../../assets/fonts/Roboto-Regular.ttf'),
-    Thin: require('../../assets/fonts/Roboto-Light.ttf'),
+    Bold: require('@/assets/fonts/Roboto-Black.ttf'),
+    Regular: require('@/assets/fonts/Roboto-Regular.ttf'),
+    Thin: require('@/assets/fonts/Roboto-Light.ttf'),
   });
 
   return (
@@ -59,7 +59,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
         }}
       />
-      
+      <Tabs.Screen
+        name="(subtabs)"
+        options={{
+          href: null, 
+        }}
+      />
     </Tabs>
   );
 }

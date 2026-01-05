@@ -1,16 +1,21 @@
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { globalStyles } from '@/styles/global';
 import { useFonts } from 'expo-font';
 import { Image } from 'expo-image';
-import { Button } from 'react-native';
+import { router } from 'expo-router'
+
+import { Pressable } from 'react-native';
+import { globalStyles } from '@/styles/global';
+
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { IconSymbol } from '@/components/ui/icon-symbol';
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
-    Bold: require('../../assets/fonts/Roboto-Black.ttf'),
-    Regular: require('../../assets/fonts/Roboto-Regular.ttf'),
-    Thin: require('../../assets/fonts/Roboto-Light.ttf'),
+    Bold: require('@/assets/fonts/Roboto-Black.ttf'),
+    Regular: require('@/assets/fonts/Roboto-Regular.ttf'),
+    Thin: require('@/assets/fonts/Roboto-Light.ttf'),
   });
 
   if (!fontsLoaded) return null;
@@ -18,30 +23,42 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={globalStyles.container} edges={['top', 'bottom']}>
 
+      {/* Top tab */}
       <ThemedView style={globalStyles.topTab}>
         <ThemedText style={[globalStyles.topTitle, { fontFamily: 'Bold' }]}>
           Home
         </ThemedText>
 
-        <ThemedView style={[{ marginRight: 15 }]}>
-          <Image
-            source={require('../../assets/images/icon.png')}
-            style={{ width: 24, height: 24 }}
-            contentFit="cover"
-            transition={1000}
+        <ThemedView style={[{ 
+          marginRight: 15, 
+          flexDirection:'row', 
+          backgroundColor: '#9CA3AF',
+          gap: 20 }]}
+        >
+          <IconSymbol
+            name='line.3.horizontal.decrease.circle'
+            size={24}
+            color="white"
+          />
+          <IconSymbol
+            name='gearshape.fill'
+            size={24}
+            color="white"
           />
         </ThemedView>
       </ThemedView>
 
+
+      {/* Main content */}
       <ThemedView style={globalStyles.main}>
-        <ThemedText>
-          Nenhum treino para hoje
-        </ThemedText>
-        <Button
-          title="Adicionar Treinos"             // ✅ título do botão
-          onPress={() => console.log('Botão pressionado')}
-          color="#2563EB"                       // opcional
-        />
+
+        <Pressable 
+          onPress={() => {setTimeout(() => {router.push('/addWorkout');}, 250);}}
+          style={({ pressed }) => [globalStyles.Button, {backgroundColor: pressed ? '#d1d1d1ff' : '#FFFFFF',}]}
+        >
+          <ThemedText style={{ fontFamily: 'Regular', color: '#000000' }}>ADICIONAR TREINO</ThemedText>
+        </Pressable>
+
       </ThemedView>
     
     </SafeAreaView>
